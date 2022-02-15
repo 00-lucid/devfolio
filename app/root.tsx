@@ -12,9 +12,10 @@ import {
   ScrollRestoration,
 } from "remix";
 import type { MetaFunction } from "remix";
+import TopBar from "./components/TopBar";
 
 export const meta: MetaFunction = () => {
-  return { title: "New Remix App" };
+  return { title: "Devfolio" };
 };
 
 export default function App() {
@@ -26,11 +27,14 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        {process.env.NODE_ENV === "development" && <LiveReload />}
+      <body className="text-main-black flex justify-center">
+        <div className="max-w-screen-lg w-full">
+          <TopBar />
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          {process.env.NODE_ENV === "development" && <LiveReload />}
+        </div>
       </body>
     </html>
   );
