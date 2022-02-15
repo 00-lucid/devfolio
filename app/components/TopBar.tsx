@@ -45,12 +45,12 @@ export default function TopBar() {
             showcase
           </Link>
           <Link
-            to={`find`}
+            to={`recruitment`}
             className={`block mt-4 lg:inline-block lg:mt-0 text-gray-400 hover:text-white ${
               show && "hover:text-black"
             } mr-4`}
           >
-            find
+            recruitment
           </Link>
         </div>
         <div>
@@ -58,8 +58,8 @@ export default function TopBar() {
             to={`login`}
             className={`inline-block ${
               show && "bg-white"
-            } text-sm px-4 py-2 leading-none border rounded text-white ${
-              show && "text-black"
+            } text-sm px-4 py-2 leading-none border rounded ${
+              show ? "text-black" : "text-white"
             } ${show ? "border-black" : "border-white"} ${
               show && "border-black"
             }hover:border-transparent ${
