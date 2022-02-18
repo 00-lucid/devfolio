@@ -22,7 +22,7 @@ export default function TopBar() {
     <nav
       className={`fixed ease-in	duration-200 w-screen left-0 flex items-center justify-between flex-wrap bg-main-black p-6 ${
         show && "bg-main-black/0"
-      }`}
+      } z-50`}
     >
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link
@@ -64,7 +64,7 @@ export default function TopBar() {
               show && "border-black"
             }hover:border-transparent ${
               show ? "hover:text-white" : "hover:text-black"
-            } ${show && "hover:bg-main-black"} hover:bg-white mt-4 lg:mt-0`}
+            } ${show ? "hover:bg-main-black" : "hover:bg-white"}  mt-4 lg:mt-0`}
           >
             Login
           </Link>
