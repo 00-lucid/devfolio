@@ -22,10 +22,10 @@ export default function ProjectCard() {
           </section>
         </section>
         <section className="relative flex flex-row items-center pl-4 pr-4">
-          <img src="./icon_profile.png" className="w-10 h-10 opacity-50 mr-2" />
+          <img src="./icon_profile.png" className="w-9 h-9 mr-2" />
           <section className="flex flex-col ">
-            <p className="font-semibold text-lg h-5">David</p>
-            <p className="text-sm opacity-50">for code</p>
+            <p className="font-semibold text-sm h-5">David</p>
+            <p className="text-xs opacity-50">for code</p>
           </section>
           <img
             src="./icon_link.png"
