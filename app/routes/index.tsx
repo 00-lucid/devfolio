@@ -4,11 +4,11 @@ import TopBar from "~/components/TopBar";
 export default function Index() {
   return (
     <>
-      <div className="flex flex-row w-full h-96 justify-center items-center">
-        <img src="./icon_code.png" className="w-32 h-32 mx-12" />
+      <div className="flex flex-row w-full h-96 justify-evenly items-center">
+        <img src="./icon_coding.png" className="w-32 h-32 mx-12" />
         <section className="font-semibold text-3xl">
           <p>Devfolio give you</p>
-          <p>project solution</p>
+          <p>side project solution</p>
           <p>of developer</p>
         </section>
       </div>
@@ -26,11 +26,11 @@ export default function Index() {
         <ProjectCard />
       </div>
 
-      <div className="flex flex-row w-full h-96 justify-center items-center">
-        <img src="./icon_rocket.jpeg" className="w-52 h-52" />
+      <div className="flex flex-row w-full h-96 justify-evenly items-center">
+        <img src="./icon_rocket.png" className="w-28 h-28" />
         <section className="font-semibold text-3xl">
           <p>Get started easily</p>
-          <p>your project</p>
+          <p>your side project</p>
           <p>with devfolio</p>
         </section>
       </div>
