@@ -13,6 +13,8 @@ import {
 } from "remix";
 import type { MetaFunction } from "remix";
 import TopBar from "./components/TopBar";
+import { useEffect, useState } from "react";
+import Footer from "./components/Footer";
 
 export const meta: MetaFunction = () => {
   return { title: "Devfolio" };
@@ -27,12 +29,15 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="text-black flex justify-center">
+      <body
+        className={`text-black flex justify-center h-full ${"bg-gray-100"}`}
+      >
         <div className="max-w-screen-lg w-full">
           <TopBar />
           <Outlet />
           <ScrollRestoration />
           <Scripts />
+          <Footer />
           {process.env.NODE_ENV === "development" && <LiveReload />}
         </div>
       </body>
