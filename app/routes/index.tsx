@@ -1,6 +1,72 @@
 import ProjectCard from "~/components/ProjectCard";
 import TopBar from "~/components/TopBar";
 
+const dummyProjects = [
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+  {
+    star: 837,
+    link: "https://www.facebook.com/",
+    writer: "facebook",
+    introduce: "happy software",
+    tag: "react next",
+  },
+];
+
 export default function Index() {
   return (
     <>
@@ -15,15 +81,9 @@ export default function Index() {
 
       {/* 모바일 화면에서 justify-center 설정필요 */}
       <div className="flex w-full flex-wrap justify-between p-1">
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
-        <ProjectCard />
+        {dummyProjects.map((project) => {
+          return <ProjectCard project={project} />;
+        })}
       </div>
 
       <div className="flex flex-row w-full h-96 justify-evenly items-center">
