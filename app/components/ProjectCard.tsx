@@ -1,9 +1,9 @@
 import Tag from "./Tag";
 
-export default function ProjectCard() {
+export default function ProjectCard({ project }: any) {
   return (
     <>
-      <div className="flex flex-col w-64 h-80 shadow-xl rounded-2xl overflow-hidden mb-12">
+      <li className="flex flex-col w-64 h-80 shadow-xl rounded-2xl bg-white overflow-hidden mb-12">
         <section>
           <div className="bg-green-500 h-48"></div>
         </section>
@@ -18,21 +18,23 @@ export default function ProjectCard() {
           </section>
           <section className="flex flex-row items-center">
             <img src="./icon_star.png" className="w-6 h-6 mr-2" />
-            <p className="font-semibold text-black opacity-50 text-lg">1.2k</p>
+            <p className="font-semibold text-black opacity-50 text-lg">
+              {project.star}
+            </p>
           </section>
         </section>
         <section className="relative flex flex-row items-center pl-4 pr-4">
           <img src="./icon_profile.png" className="w-9 h-9 mr-2" />
           <section className="flex flex-col ">
-            <p className="font-semibold text-sm h-5">David</p>
-            <p className="text-xs opacity-50">for code</p>
+            <p className="font-semibold text-sm h-5">{project.writer}</p>
+            <p className="text-xs opacity-50">{project.introduce}</p>
           </section>
           <img
             src="./icon_link.png"
             className="absolute right-0 mr-6 cursor-pointer w-7 h-7 opacity-50"
           />
         </section>
-      </div>
+      </li>
     </>
   );
 }

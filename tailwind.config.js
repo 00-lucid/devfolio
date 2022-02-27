@@ -8,6 +8,10 @@ module.exports = {
       backgroundColor: {
         "main-black": "#121212",
       },
+      width: {
+        tablet: "768px",
+        "minus-tablet": "256px",
+      },
     },
   },
   plugins: [],

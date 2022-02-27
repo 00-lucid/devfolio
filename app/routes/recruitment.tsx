@@ -1,8 +1,22 @@
+import { Post } from "@prisma/client";
+import { LoaderFunction, useLoaderData } from "remix";
 import Calendar from "~/components/Calendar";
 import PostList from "~/components/PostList";
 import Search from "~/components/Search";
 
+import { db } from "../util/db.server";
+
+type LoaderData = { posts: Array<Post> };
+
+export let loader: LoaderFunction = async () => {
+  const data: LoaderData = {
+    posts: await db.post.findMany(),
+  };
+  return data;
+};
+
 export default function RecruitmentRoute() {
+  const data = useLoaderData();
   return (
     <>
       <div className="flex flex-row items-center w-full mt-20 h-20 mb-4 z-40 bg-gray-100 justify-between">
@@ -27,26 +41,10 @@ export default function RecruitmentRoute() {
       <section className="flex flex-row">
         <section className="flex flex-col items-center">
           <div className="bg-white w-tablet m-1 rounded-lg overflow-hidden">
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
-            <PostList />
+            {/* count 20 */}
+            {data.posts.map((post: Post) => (
+              <PostList post={post} />
+            ))}
           </div>
           <div className="my-4">
             <nav aria-label="Page navigation example">

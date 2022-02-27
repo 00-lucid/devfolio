@@ -44,7 +44,7 @@ export default function LoginRoute() {
                     Email Address
                   </div>
                   <input
-                    className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-black"
+                    className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-gray-100"
                     type=""
                     placeholder="example@gmail.com"
                   />
@@ -64,7 +64,7 @@ export default function LoginRoute() {
                     </div>
                   </div>
                   <input
-                    className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-black"
+                    className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-gray-100"
                     type="password"
                     placeholder="Enter your password"
                   />
