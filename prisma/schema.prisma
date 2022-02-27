@@ -1,0 +1,44 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now())
+  username     String   @unique
+  passwordHash String
+}
+
+model Post {
+  id String @id @default(uuid())
+  title String
+  view Int 
+  createdAt  DateTime   @default(now())
+  writer String
+  introduce String
+  // 모집인원
+  scale_people Int
+  // 일정
+  scale_date Int
+  // 태그
+  tag String
+}
+
+model Project {
+  id String @id @default(uuid())
+  name String
+  content String
+  star Int @default(0)
+  link String
+  writer String
+  introduce String
+  tag String
+}
