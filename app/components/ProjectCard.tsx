@@ -1,12 +1,13 @@
+import { Link } from "react-router-dom";
 import Tag from "./Tag";
 
 export default function ProjectCard({ project }: any) {
   return (
     <>
       <li className="flex flex-col w-64 h-80 shadow-xl rounded-2xl bg-white overflow-hidden mb-12">
-        <section>
+        <Link to={project.id}>
           <div className="bg-green-500 h-48"></div>
-        </section>
+        </Link>
         <section className="flex flex-row p-4 justify-between items-center">
           <section className="flex flex-row flex items-center">
             <Tag text={"aws"} />
