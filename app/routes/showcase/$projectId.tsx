@@ -4,11 +4,18 @@ import { LoaderFunction, useLoaderData } from "remix";
 import Tag from "~/components/Tag";
 import { db } from "../../util/db.server";
 
-type LoaderData = { project: Project };
+type LoaderData = { project: any };
 
 export const loader: LoaderFunction = async ({ params }) => {
   const project = await db.project.findUnique({
     where: { id: params.projectId },
+    include: {
+      writer: {
+        select: {
+          username: true,
+        },
+      },
+    },
   });
   if (!project) throw new Error("project not found");
   const data: LoaderData = { project };
@@ -35,7 +42,9 @@ export default function ShowCaseProjectRoute() {
       <section className="flex flex-row items-center mb-4">
         <img src="../icon_profile.png" className="w-9 h-9 mr-2" />
         <section className="flex flex-col ">
-          <p className="font-semibold text-sm h-5">{data.project.writer}</p>
+          <p className="font-semibold text-sm h-5">
+            {data.project.writer.username}
+          </p>
           <p className="text-xs opacity-50">{data.project.introduce}</p>
         </section>
       </section>

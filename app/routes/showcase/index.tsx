@@ -2,13 +2,29 @@ import { prisma, Project } from "@prisma/client";
 import { Link } from "react-router-dom";
 import { LoaderFunction, useLoaderData, Outlet } from "remix";
 import ProjectCard from "~/components/ProjectCard";
+import { getUser } from "~/util/session.server";
 import { db } from "../../util/db.server";
 
-type LoaderData = { projects: Array<Project> };
+type LoaderData = {
+  projects: Array<Project>;
+};
 
 export let loader: LoaderFunction = async () => {
   const data: LoaderData = {
-    projects: await db.project.findMany(),
+    projects: await db.project.findMany({
+      // skip
+      take: 12,
+      orderBy: {
+        createdAt: "desc",
+      },
+      include: {
+        writer: {
+          select: {
+            username: true,
+          },
+        },
+      },
+    }),
   };
   return data;
 };

@@ -1,14 +1,7 @@
 import { Link } from "react-router-dom";
-import {
-  ActionFunction,
-  Form,
-  json,
-  Outlet,
-  useActionData,
-  useSearchParams,
-} from "remix";
+import { ActionFunction, Form, json } from "remix";
 import { db } from "~/util/db.server";
-import { createUserSession, login, register } from "~/util/session.server";
+import { createUserSession, register } from "~/util/session.server";
 
 function validateUsername(username: unknown) {
   if (typeof username !== "string" || username.length < 3) {
@@ -65,22 +58,27 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (Object.values(fieldErrors).some(Boolean))
     return badRequest({ fieldErrors, fields });
-
-  console.log("login...");
-  const user = await login({ username, password });
-  console.log({ user });
-  console.log("|");
+  console.log("register...");
+  const userExists = await db.user.findFirst({
+    where: { username },
+  });
+  if (userExists) {
+    return badRequest({
+      fields,
+      formError: `User with username ${username} already exists`,
+    });
+  }
+  const user = await register({ username, password });
   if (!user) {
     return badRequest({
       fields,
-      formError: `Username/Password combination is incorrect`,
+      formError: `Something went wrong trying to create a new user.`,
     });
   }
   return createUserSession(user.id, redirectTo);
 };
 
-export default function LoginRoute() {
-  const actionData = useActionData<ActionData>();
+export default function SignupRoute() {
   return (
     <>
       <div className="lg:flex">
@@ -115,7 +113,7 @@ export default function LoginRoute() {
               className="text-center text-4xl text-black font-display font-semibold lg:text-left xl:text-5xl
                   xl:text-bold"
             >
-              Log in
+              Sign up
             </h2>
             <div className="mt-12">
               <Form method="post">
@@ -128,7 +126,7 @@ export default function LoginRoute() {
                     type=""
                     name="username"
                     placeholder="username"
-                    defaultValue={actionData?.fields?.username}
+                    // defaultValue={actionData?.fields?.username}
                   />
                 </div>
                 <div className="mt-8">
@@ -136,21 +134,13 @@ export default function LoginRoute() {
                     <div className="text-sm font-bold text-gray-700 tracking-wide">
                       Password
                     </div>
-                    <div>
-                      <a
-                        className="text-xs font-display font-semibold text-black opacity-50 hover:opacity-100
-                                      cursor-pointer"
-                      >
-                        Forgot Password?
-                      </a>
-                    </div>
                   </div>
                   <input
                     className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-gray-100"
                     type="password"
                     name="password"
                     placeholder="password"
-                    defaultValue={actionData?.fields?.password}
+                    // defaultValue={actionData?.fields?.password}
                   />
                 </div>
                 <div className="mt-10">
@@ -160,17 +150,17 @@ export default function LoginRoute() {
                               shadow-lg"
                     type="submit"
                   >
-                    Log In
+                    Sign Up
                   </button>
                 </div>
               </Form>
               <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
-                Don't have an account ?{" "}
+                Do you have an account ?{" "}
                 <Link
-                  to="/signup"
+                  to="/login"
                   className="cursor-pointer text-black opacity-50 hover:opacity-100"
                 >
-                  Sign up
+                  Log in
                 </Link>
               </div>
             </div>
