@@ -1,23 +1,12 @@
 import { PrismaClient, Prisma } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma: any = new PrismaClient();
-// id String @id @default(uuid())
-// title String
-// view Int
-// createdAt  DateTime   @default(now())
-// writer String
-// introduce String
-// // 모집인원
-// scale_people Int
-// // 일정
-// scale_date Int
-// // 태그
-// tag String
+
 const posts = [
   {
     title: "Powerful Front Librery",
     view: 652,
-    writer: "john",
     introduce: "bettwe us",
     scale_people: 4,
     scale_date: 30,
@@ -26,7 +15,6 @@ const posts = [
   {
     title: "Apple Software Fix",
     view: 1986,
-    writer: "david",
     introduce: "apple is good",
     scale_people: 12,
     scale_date: 90,
@@ -35,7 +23,6 @@ const posts = [
   {
     title: "Android Developer",
     view: 931,
-    writer: "kim",
     introduce: "omg",
     scale_people: 4,
     scale_date: 30,
@@ -44,7 +31,6 @@ const posts = [
   {
     title: "Web Fix",
     view: 5,
-    writer: "nam",
     introduce: "beebee",
     scale_people: 1,
     scale_date: 90,
@@ -58,7 +44,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -67,7 +52,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -76,7 +60,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -85,7 +68,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -94,7 +76,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -103,7 +84,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -112,7 +92,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -121,7 +100,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -130,7 +108,6 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
@@ -139,21 +116,37 @@ const projects = [
     name: "Facebook lib project",
     content: "facebook is...",
     link: "https://www.naver.com/",
-    writer: "naver",
     introduce: "korea software firm",
     tag: "vue next",
   },
 ];
+
+const users = [
+  {
+    username: "root",
+  },
+];
+
 async function main() {
+  await prisma.post.deleteMany({});
+  await prisma.project.deleteMany({});
+  await prisma.user.deleteMany({});
+
+  const passwordHash = await bcrypt.hash("root", 10);
+  const data = { passwordHash, ...users[0] };
+  const developer = await prisma.user.create({ data });
+
   await Promise.all(
     posts.map((post) => {
-      return prisma.post.create({ data: post });
+      const data = { writerId: developer.id, ...post };
+      return prisma.post.create({ data });
     })
   );
 
   await Promise.all(
     projects.map((project) => {
-      return prisma.project.create({ data: project });
+      const data = { writerId: developer.id, ...project };
+      return prisma.project.create({ data });
     })
   );
 }
