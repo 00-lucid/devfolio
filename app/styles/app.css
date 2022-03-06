@@ -1,7 +1,3 @@
-/*
-! tailwindcss v3.0.22 | MIT License | https://tailwindcss.com
-*/
-
 *,
 ::before,
 ::after {
@@ -94,10 +90,6 @@ a {
   color: inherit;
   text-decoration: inherit;
 }
-
-/*
-Add the correct font weight in Edge and Safari.
-*/
 
 b,
 strong {
