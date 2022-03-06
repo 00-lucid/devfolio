@@ -80,11 +80,11 @@ export default function Index() {
       </div>
 
       {/* 모바일 화면에서 justify-center 설정필요 */}
-      <div className="flex w-full flex-wrap justify-between p-1">
+      {/* <div className="flex w-full flex-wrap justify-between p-1">
         {dummyProjects.map((project) => {
           return <ProjectCard project={project} />;
         })}
-      </div>
+      </div> */}
 
       <div className="flex flex-row w-full h-96 justify-evenly items-center">
         <img src="./icon_rocket.png" className="w-28 h-28" />

@@ -6,21 +6,40 @@ export function links() {
 import {
   Links,
   LiveReload,
+  LoaderFunction,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "remix";
 import type { MetaFunction } from "remix";
 import TopBar from "./components/TopBar";
 import { useEffect, useState } from "react";
 import Footer from "./components/Footer";
+import { getUser } from "./util/session.server";
 
 export const meta: MetaFunction = () => {
   return { title: "Devfolio" };
 };
 
+type LoaderData = {
+  user: Awaited<ReturnType<typeof getUser>>;
+};
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const user = await getUser(request);
+
+  const data: LoaderData = {
+    user,
+  };
+
+  return data;
+};
+
 export default function App() {
+  const data = useLoaderData<LoaderData>();
+
   return (
     <html lang="en">
       <head>
@@ -33,7 +52,7 @@ export default function App() {
         className={`text-black flex justify-center h-full ${"bg-gray-100"}`}
       >
         <div className="max-w-screen-lg w-full">
-          <TopBar />
+          <TopBar data={data} />
           <Outlet />
           <ScrollRestoration />
           <Scripts />

@@ -4,6 +4,7 @@ import { Form } from "remix";
 import type { ActionFunction } from "remix";
 import { redirect } from "remix";
 import { db } from "~/util/db.server";
+import { requireUserId } from "~/util/session.server";
 
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
@@ -11,7 +12,6 @@ export const action: ActionFunction = async ({ request }) => {
   const link = form.get("link");
   const tag = form.get("tag");
   const content = form.get("content");
-  const writer = "admin";
   const introduce = "devfolio developer";
 
   if (
@@ -23,8 +23,11 @@ export const action: ActionFunction = async ({ request }) => {
     throw new Error(`Form not submitted correctly.`);
   }
 
-  const fields = { name, link, tag, content, writer, introduce };
-  const project = await db.project.create({ data: fields });
+  const userId = await requireUserId(request);
+  const fields = { name, link, tag, content, introduce };
+  const project = await db.project.create({
+    data: { ...fields, writerId: userId },
+  });
   return redirect(`/showcase`);
 };
 
@@ -58,6 +61,7 @@ export default function ShowcaseWriteRoute() {
           type=""
           name="name"
         />
+
         <div className="text-sm font-bold text-gray-700 tracking-wide">
           Project Link (Optional)
         </div>
@@ -66,6 +70,7 @@ export default function ShowcaseWriteRoute() {
           type=""
           name="link"
         />
+
         <div className="text-sm font-bold text-gray-700 tracking-wide">Tag</div>
         <input
           className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-gray-100 mb-4"
@@ -75,7 +80,7 @@ export default function ShowcaseWriteRoute() {
         <div className="text-sm font-bold text-gray-700 tracking-wide mb-2">
           Project Explanation
         </div>
-        <div>
+        <div className="flex flex-row">
           <button className="w-10 h-10 font-semibold text-base hover:bg-white">
             H1
           </button>
@@ -96,6 +101,9 @@ export default function ShowcaseWriteRoute() {
           </button>
           <button className="w-10 h-10 font-semibold text-base hover:bg-white">
             T
+          </button>
+          <button className="w-10 h-10 font-semibold text-base hover:bg-white flex justify-center items-center">
+            <img className="w-5 h-4" src={`../icon_photo.png`} />
           </button>
         </div>
         <textarea

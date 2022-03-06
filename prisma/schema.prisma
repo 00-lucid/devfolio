@@ -15,6 +15,9 @@ model User {
   createdAt    DateTime @default(now())
   username     String   @unique
   passwordHash String
+
+  posts Post[]
+  projects Project[]
 }
 
 model Post {
@@ -22,7 +25,6 @@ model Post {
   title String
   view Int 
   createdAt  DateTime   @default(now())
-  writer String
   introduce String
   // 모집인원
   scale_people Int
@@ -30,6 +32,9 @@ model Post {
   scale_date Int
   // 태그
   tag String
+
+  writerId String
+  writer User @relation(fields: [writerId], references: [id], onDelete: Cascade)
 }
 
 model Project {
@@ -38,7 +43,10 @@ model Project {
   content String
   star Int @default(0)
   link String
-  writer String
   introduce String
   tag String
+  createdAt  DateTime   @default(now())
+
+  writerId String
+  writer User @relation(fields: [writerId], references: [id], onDelete: Cascade)
 }

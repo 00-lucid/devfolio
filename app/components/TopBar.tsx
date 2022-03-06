@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Form } from "remix";
 
-export default function TopBar() {
+export default function TopBar({ data }: any) {
   const [show, setShow] = useState(true);
   const controlTopBar = () => {
     if (window.scrollY > 100) {
@@ -54,20 +55,33 @@ export default function TopBar() {
           </Link>
         </div>
         <div>
-          <Link
-            to={`login`}
-            className={`inline-block ${
-              show && "bg-white"
-            } text-sm px-4 py-2 leading-none border rounded ${
-              show ? "text-black" : "text-white"
-            } ${show ? "border-black" : "border-white"} ${
-              show && "border-black"
-            }hover:border-transparent ${
-              show ? "hover:text-white" : "hover:text-black"
-            } ${show ? "hover:bg-main-black" : "hover:bg-white"}  mt-4 lg:mt-0`}
-          >
-            Login
-          </Link>
+          {data?.user ? (
+            <section className="flex flex-row">
+              <span className="mr-4">{`Hello ${data.user.username}!`}</span>
+              <Form action="/logout" method="post">
+                <button type="submit" className="button">
+                  Logout
+                </button>
+              </Form>
+            </section>
+          ) : (
+            <Link
+              to={`login`}
+              className={`inline-block ${
+                show && "bg-white"
+              } text-sm px-4 py-2 leading-none border rounded ${
+                show ? "text-black" : "text-white"
+              } ${show ? "border-black" : "border-white"} ${
+                show && "border-black"
+              }hover:border-transparent ${
+                show ? "hover:text-white" : "hover:text-black"
+              } ${
+                show ? "hover:bg-main-black" : "hover:bg-white"
+              }  mt-4 lg:mt-0`}
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>
